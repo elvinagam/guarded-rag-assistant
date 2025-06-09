@@ -106,6 +106,10 @@ class CoreSettings(BaseSettings):
     rag_documents: str = Field(
         description="Local path to zip file of pdf, txt, docx, md files to use with RAG",
     )
+    doc_glob: str = Field(
+        default="**/*.*",
+        description="Glob pattern for documents inside the zip file",
+    )
     rag_type: RAGType = Field(
         description="Whether to use DR RAG chunking, vectorization, retrieval, or user-provided (DIY)",
     )
