@@ -17,7 +17,10 @@ from __future__ import annotations
 import base64
 import logging
 import os
+import subprocess
 import sys
+import tempfile
+from pathlib import Path
 
 import datarobot as dr
 import streamlit as st
@@ -120,6 +123,29 @@ def render_answer_and_citations(container: DeltaGenerator, response: RAGOutput) 
 def main() -> None:
     render_svg(svg)
     st.title(app_settings.page_title)
+
+    uploaded_files = st.file_uploader(
+        gettext("Upload documents"),
+        type=["pdf", "docx"],
+        accept_multiple_files=True,
+    )
+
+    if uploaded_files:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            for uploaded_file in uploaded_files:
+                file_path = Path(tmpdir) / uploaded_file.name
+                file_path.write_bytes(uploaded_file.read())
+
+            with st.spinner(gettext("Ingesting uploaded documents...")):
+                subprocess.run(
+                    [
+                        sys.executable,
+                        "scripts/ingest_docs.py",
+                        tmpdir,
+                    ],
+                    check=False,
+                )
+        st.success(gettext("Document ingestion complete."))
 
     chat_container = st.container()
     prompt_container = st.container()
