@@ -23,6 +23,7 @@ In addition to creating a hosted, shareable user interface, the guarded RAG assi
 3. [Why build AI Apps with DataRobot app templates?](#why-build-ai-apps-with-datarobot-app-templates)
 4. [Make changes](#make-changes)
    - [Change the RAG documents](#change-the-rag-documents)
+   - [Ingest documents with scripts/ingest_docs.py](#ingest-documents-with-scriptsingest_docspy)
    - [Change the LLM](#change-the-llm)
    - [Change the RAG prompt](#change-the-RAG-prompt)
    - [Custom front-end](#fully-custom-front-end)
@@ -112,6 +113,28 @@ Each template provides an end-to-end AI architecture, from raw inputs to deploye
    source set_env.sh  # On windows use `set_env.bat`
    pulumi up
    ```
+
+### Ingest documents with scripts/ingest_docs.py
+
+Use `scripts/ingest_docs.py` when you have a folder of PDFs you would like to
+add to the vector database. Run the script and point it at your folder of
+documents:
+
+```bash
+python scripts/ingest_docs.py --docs-folder /path/to/my_pdfs
+```
+
+The script searches for files matching the `doc_glob` pattern within the folder.
+By default `doc_glob="**/*.pdf"`. Adjust the glob to ingest other formats, for
+example, all text files:
+
+```bash
+python scripts/ingest_docs.py --docs-folder /path/to/docs --doc-glob "**/*.txt"
+```
+
+If you deploy the optional Streamlit UI and it includes a document upload
+widget, you can also drag and drop files in the browser. Uploaded files are
+processed using the same `doc_glob` filter.
 
 ### Change the LLM
 
