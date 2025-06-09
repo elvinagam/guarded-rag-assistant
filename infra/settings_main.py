@@ -35,6 +35,7 @@ core = CoreSettings(
     rag_documents=str(
         PROJECT_ROOT / "assets" / "datarobot_english_documentation_docsassist.zip"
     ),
+    doc_glob="**/*.pdf",
     rag_type=RAGType.DR,
     application_type=ApplicationType.DR,
 )

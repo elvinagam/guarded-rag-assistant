@@ -106,6 +106,7 @@ Each template provides an end-to-end AI architecture, from raw inputs to deploye
 
 1. Replace `assets/datarobot_english_documentation_docsassist.zip` with a new zip file containing .pdf, .docx,
    .md, or .txt documents ([example alternative docs here](https://s3.amazonaws.com/datarobot_public_datasets/ai_accelerators/acme_corp_company_policies_source_business_victoria_templates.zip)).
+2. Update the `doc_glob` setting in `infra/settings_main.py` to specify which files inside the zip are processed.
 3. Update the `rag_documents` setting in `infra/settings_main.py` to specify the local path to the
    new zip file.
 4. Run `pulumi up` to update your stack.

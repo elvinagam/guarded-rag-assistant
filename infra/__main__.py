@@ -198,6 +198,7 @@ elif settings_main.core.rag_type == RAGType.DIY:
         ]
     ):
         pulumi.info("Executing doc chunking + vdb building notebook...")
+        os.environ["MAIN_DOC_GLOB"] = settings_main.core.doc_glob
         pm.execute_notebook(
             settings_generative.diy_rag_nb,
             output_path=None,
